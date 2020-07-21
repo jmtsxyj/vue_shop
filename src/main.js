@@ -16,6 +16,11 @@ Vue.use(ElementUI);
 //axios
 import axios from 'axios';
 axios.defaults.baseURL = 'https://www.liulongbin.top:8888/api/private/v1/';
+axios.interceptors.request.use(config => {
+  config.headers.Authorization = window.sessionStorage.getItem('token');
+  // 在最后必须return config
+  return config;
+})
 Vue.prototype.$http = axios;
 
 
