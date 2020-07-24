@@ -74,6 +74,7 @@
                 type="warning"
                 icon="el-icon-setting"
                 size="mini"
+                @click="ShowDio(scope.row)"
               ></el-button>
             </el-tooltip>
           </template>
@@ -157,6 +158,32 @@
         <el-button type="primary" @click="ModifiesSubmit">确 定</el-button>
       </span>
     </el-dialog>
+    <!-- 分配权限的dio -->
+    <el-dialog
+      title="外层 Dialog"
+      :visible.sync="ApportionVisible"
+      @close="setRoleDialogClosed"
+    >
+      <div>
+        <p>当前的用户：{{ ApportionList.role_name }}</p>
+        <p>当前的角色：{{ ApportionList.username }}</p>
+        <p>
+          分配新角色：
+          <el-select v-model="selectedRole" placeholder="请选择">
+            <el-option
+              v-for="item in rolesList"
+              :key="item.id"
+              :label="item.roleName"
+              :value="item.id"
+            ></el-option>
+          </el-select>
+        </p>
+      </div>
+      <div slot="footer" class="dialog-footer">
+        <el-button @click="ApportionVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveRoleInfo">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -177,6 +204,11 @@ export default {
       cb(new Error('请输入正确格式的手机'))
     }
     return {
+      //保存点击分配管理时的数据
+      ApportionList: [],
+      selectedRole: '',
+      // 所有角色的下拉列表
+      rolesList: [],
       // 添加用户对话框是否显示
       addDialogVisible: false,
       // 修改用户对话框是否显示
@@ -252,7 +284,8 @@ export default {
             trigger: 'blur'
           }
         ]
-      }
+      },
+      ApportionVisible: false
     }
   },
   created() {
@@ -365,6 +398,38 @@ export default {
       this.$message.success('删除用户成功')
       this.getUserList()
       console.log(this.ModifiesData)
+    },
+    //点击分配管理按钮
+    async ShowDio(value) {
+      this.ApportionList = value
+      // 在展示对话框之前获取所有角色的列表
+      const { data: res } = await this.$http.get('roles')
+      console.log(res)
+      if (res.meta.status !== 200)
+        return this.$message.error('获取角色列表失败')
+      this.rolesList = res.data
+      console.log(res)
+      this.ApportionVisible = true
+    },
+    // 分配角色展开时点击确定时得按钮
+    async saveRoleInfo() {
+      if (!this.selectedRole) return this.$message.error('请选择要分配的角色')
+      const { data: res } = await this.$http.put(
+        `users/${this.ApportionList.id}/role`,
+        {
+          rid: this.selectedRole
+        }
+      )
+      if (res.meta.status !== 200) return this.$mesage.error('更新角色失败')
+      this.$message.success('更新角色成功')
+      console.log(this.ApportionList.id)
+      this.getUserList()
+      this.ApportionVisible = false
+    },
+    // 分配权限对话框时事件
+    setRoleDialogClosed() {
+      this.selectedRole = ''
+      this.ApportionList = {}
     }
   }
 }
