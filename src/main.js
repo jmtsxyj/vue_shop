@@ -7,6 +7,7 @@ import store from './store'
 //全局css样式
 import './assets/necolas-normalize.css-fc091cc/normalize.css'
 import './assets/css/global.css'
+import TreeTable from 'vue-table-with-tree-grid'
 
 // elementui
 import ElementUI from 'element-ui';
@@ -22,6 +23,8 @@ axios.interceptors.request.use(config => {
   return config;
 })
 Vue.prototype.$http = axios;
+
+Vue.component('tree-table',TreeTable)
 
 
 Vue.config.productionTip = false
