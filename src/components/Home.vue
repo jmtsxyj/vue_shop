@@ -1,6 +1,4 @@
 <template>
-  <!-- <div>
-  </div> -->
   <el-container class="home-container">
     <el-header>
       <div class="title">
@@ -53,7 +51,7 @@
         </el-menu>
       </el-aside>
       <el-main>
-          <router-view></router-view>
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -74,7 +72,7 @@ export default {
         '145': 'iconfont icon-shuju'
       },
       collapseClick: false,
-      activePath:'',
+      activePath: ''
     }
   },
   methods: {
@@ -90,23 +88,22 @@ export default {
       this.menulist = res.data
     },
     // 点击按钮切换菜单的折叠和展开
-    CloseClick(){
-        return this.collapseClick = !this.collapseClick;
+    CloseClick() {
+      return (this.collapseClick = !this.collapseClick)
     },
     // 保存链接的激活状态
-    ClickActive(value){
-      window.sessionStorage.setItem('activePath',value);
-      this.activePath = value;
+    ClickActive(value) {
+      window.sessionStorage.setItem('activePath', value)
+      this.activePath = value
     }
   },
   created() {
     //   调用发送请求事件
-    this.getMentList();
-    this.activePath = window.sessionStorage.getItem('activePath');
+    this.getMentList()
+    this.activePath = window.sessionStorage.getItem('activePath')
   }
 }
 </script>
-
 <style lang="less" scoped>
 .home-container {
   height: 100%;
