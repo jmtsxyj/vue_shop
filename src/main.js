@@ -24,8 +24,25 @@ axios.interceptors.request.use(config => {
 })
 Vue.prototype.$http = axios;
 
-Vue.component('tree-table',TreeTable)
+Vue.component('tree-table', TreeTable)
+import {
+  formatDate
+} from './common/unti';
+// 过滤器
+Vue.filter('dateForm', function (originVal) {
+  const dt = new Date(originVal)
+  return formatDate(dt,'yyyy-mm-dd hh:MM:ss')
 
+})
+
+// 导入富文本
+import VueQuillEditor from 'vue-quill-editor'
+// 样式
+import 'quill/dist/quill.core.css' // import styles
+import 'quill/dist/quill.snow.css' // for snow theme
+import 'quill/dist/quill.bubble.css' // for bubble theme
+// 注册
+Vue.use(VueQuillEditor, /* { default global options } */)
 
 Vue.config.productionTip = false
 

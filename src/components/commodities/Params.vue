@@ -115,7 +115,7 @@
           <!-- 属性表格 -->
           <el-table :data="onlyTableData" border stripe>
             <!-- 展开行 -->
-               <el-table-column type="expand">
+            <el-table-column type="expand">
               <template slot-scope="scope">
                 <!-- 循环渲染Tag标签 -->
                 <el-tag

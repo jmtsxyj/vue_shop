@@ -10,8 +10,9 @@ const Rights = () => import('../components/access/Rights.vue')
 const Goods = () => import('../components/commodities/Goods.vue')
 const Categroy = () => import('../components/commodities/Categroy.vue')
 const Params = () => import('../components/commodities/Params.vue')
-const Order = ()=>import('../components/order/Order.vue') 
-const Reports = ()=>import('../components/data/Reports.vue')
+const Order = () => import('../components/order/Order.vue')
+const Reports = () => import('../components/data/Reports.vue')
+const AddGoods = () => import('../components/commodities/AddGoods.vue')
 Vue.use(VueRouter)
 
 const routes = [{
@@ -62,6 +63,10 @@ const routes = [{
         path: '/reports',
         component: Reports,
       },
+      {
+        path:"/goods/add",
+        component:AddGoods
+      }
     ],
   },
 ]
