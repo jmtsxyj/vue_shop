@@ -277,7 +277,7 @@ export default {
     },
     // 添加商品
     add() {
-      this.$refs.addFormRef.validate( async vaild => {
+      this.$refs.addFormRef.validate(async vaild => {
         console.log(vaild)
         if (!vaild) return this.$message.error('请填写必要的表单项')
         const form = _.cloneDeep(this.addForm)
@@ -297,9 +297,9 @@ export default {
           this.addForm.attrs.push(newinfo)
         })
         form.attrs = this.addForm.attrs
-        const {data:res} = await this.$http.post('goods',form)
-        console.log(res);
-        if(res.meta.status !== 201) return this.$message.error('添加商品失败')
+        const { data: res } = await this.$http.post('goods', form)
+        console.log(res)
+        if (res.meta.status !== 201) return this.$message.error('添加商品失败')
         this.$message.success('添加商品成功')
         this.$router.push('/goods')
         console.log(form)
